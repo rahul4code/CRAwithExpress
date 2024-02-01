@@ -44,17 +44,10 @@
     },
     {
       "id": 7,
-      "name": "South Africa",
+      "name": "South-Affrica",
       "continent": "Africa",
       "flag": "images/southafrica.png",
       "rank": 2
-    },
-    {
-      "id": 8,
-      "name": "India",
-      "continent": "Asia",
-      "flag": "images/india.png",
-      "rank": 1
     }
   ]
 }
