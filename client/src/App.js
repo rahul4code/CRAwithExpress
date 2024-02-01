@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText, Jumbotron } from 'reactstrap';
 import Select from 'react-select'
 
 class App extends Component {
@@ -29,6 +29,7 @@ class App extends Component {
     this.toggle = this.toggle.bind(this)
     this.onFileChangeHandler = this.onFileChangeHandler.bind(this)
     this.handleChangeContinent = this.handleChangeContinent.bind(this)
+    this.generatePayload=this.generatePayload.bind(this)
   }
 
   componentDidMount() {
@@ -65,24 +66,35 @@ class App extends Component {
     }
   }
 
+  generatePayload()
+  {
+    return{
+      continent:this.state.continentName,
+      name:this.state.name,
+      rank:this.state.newRank,
+      flag:this.state.selectedFile
+    }
+  }
+
+
   onSubmit() {
     if(this.state.continentName!=="")
     {
       if (this.state.country.length > 3) {
         let isnum = /^\d+$/.test(this.state.newRank);
         if (isnum) {
-          const formData = new FormData();
-          formData.append('file', this.state.selectedFile);
-          if (formData) {
+          const payload=this.generatePayload();
+          // const formData = new FormData();
+          // formData.append('file', this.state.selectedFile);
+          if (payload) {
             if(this.state.selectedFile.size<4096000)
             {
-              alert("Working")
-              let data={"result":"haha","formData":"formData"};
-              console.log(formData,"formData")
+              // let data={"result":"haha","formData":"formData"};
+              console.log(payload,"formData")
               fetch("http://localhost:8080/api/addCountry", 
               {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify(payload),
               }).then(res => {
                   console.log(res.data);
                   alert("Country Added successfully.")
@@ -168,7 +180,7 @@ class App extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add Country</ModalHeader>
           <ModalBody>
-            <Form>
+            <Jumbotron>
 
               <FormGroup>
                 <Label for="exampleSelect">Select Continent</Label>
@@ -197,7 +209,7 @@ class App extends Component {
                 <Label for="exampleFile">File</Label>
                 <Input type="file" name="file" id="exampleFile" onChange={this.onFileChangeHandler} />
               </FormGroup>
-            </Form>
+            </Jumbotron>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.onSubmit}>Submit</Button>{' '}

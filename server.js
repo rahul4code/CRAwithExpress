@@ -55,15 +55,15 @@ app.get('/api/getCountry/:name',cors(corsOptions),(req,res)=>{
 
 app.post('/api/addCountry',cors(corsOptions),(req,res)=>{
     console.log(req.body,"Get all data")
-    // let new_Country={
-    //     "id":countries.length+1,
-    //     "name":req.body.name,
-    //     "continent":req.body.continent,
-    //     "flag":req.body.flag,
-    //     "rank":req.body.rankNew
-    // }
-    // countries.push(new_Country);
-    // res.send(countries);
+    let new_Country={
+        "id":countries.length+1,
+        "name":req.body.country,
+        "continent":req.body.continent,
+        "flag":req.body.flag,
+        "rank":req.body.rankNew
+    }
+    countries.push(new_Country);
+    res.send(countries);
 })
 
 
